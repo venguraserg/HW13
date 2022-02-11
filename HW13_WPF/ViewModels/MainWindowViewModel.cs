@@ -9,6 +9,14 @@ namespace HW13_WPF.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+        public string Test { get; set; }
 
+
+
+
+        public MainWindowViewModel()
+        {
+            
+        }
     }
 }

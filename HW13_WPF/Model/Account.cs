@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HW13_WPF.Model
 {
-    class Account
+    public class Account
     {
     }
 }

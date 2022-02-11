@@ -11,6 +11,6 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-
+        <TextBlock Text="{Binding Path=Test}"/>
     </Grid>
 </Window>
