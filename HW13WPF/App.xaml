@@ -1,0 +1,9 @@
+﻿<Application x:Class="HW13WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:HW13WPF"
+             StartupUri="Viev.MainWindowView.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
