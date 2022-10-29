@@ -11,7 +11,23 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <ListView ItemsSource="{Binding Clients}" Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Выход" />
+        </Menu>
+        <ListView ItemsSource="{Binding Clients}" 
+                  SelectedItem="{Binding SelectedClient}"
+                  Margin="5" 
+                  Grid.Row="1" 
+                  Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="300">Id</GridViewColumn>
@@ -20,5 +36,15 @@
                  </GridView>
             </ListView.View>
         </ListView>
+        <GroupBox Header="Клиент" Margin="5" Grid.Row="2"  Grid.ColumnSpan="2">
+            <TabControl Margin="3">
+                <TabItem Header="Редактировть/Удалить">
+                    
+                </TabItem>
+                <TabItem Header="Добавить нового">
+                    
+                </TabItem>
+            </TabControl>
+        </GroupBox>
     </Grid>
 </Window>
