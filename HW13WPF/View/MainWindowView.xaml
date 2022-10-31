@@ -6,7 +6,11 @@
         xmlns:vm="clr-namespace:HW13WPF.ViewModel"
         xmlns:local="clr-namespace:HW13WPF"
         mc:Ignorable="d"
-        Title="Банковская система" Height="450" Width="800">
+        Title="Банковская система" 
+        Height="800" 
+        Width="800" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" >
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -33,7 +37,7 @@
                           >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Surname}"  Width="100">Фамилия</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=SurName}"  Width="100">Фамилия</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Имя</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Patronymic}" Width="100">Отчество</GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Width="100">№ телефона</GridViewColumn>
@@ -80,7 +84,7 @@
 
                     </StackPanel>
                     <GroupBox Header="Счета" Grid.Column="1" Margin="1">
-                        <ListView ItemsSource="{Binding SelectedClient.Accounts}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                        <ListView ItemsSource="{Binding SelectedClient.AccountsId}" d:ItemsSource="{d:SampleData ItemCount=5}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>
@@ -127,10 +131,10 @@
                             <TextBox Text="{Binding NewClientPatronymic}"/>
                         </GroupBox>
                         <GroupBox Header="Номер телефона" Margin="2">
-                            <TextBox <!-- Text="{Binding NewClientPhoneNumber}" -->/>
+                            <TextBox Text="{Binding NewClientPhoneNumber}"/>
                         </GroupBox>
                         <GroupBox Header="Номер паспорта" Margin="2" >
-                            <TextBox <!-- Text="{Binding NewClientPassNuber}" -->/>
+                            <TextBox  Text="{Binding NewClientPassNuber}" />
                         </GroupBox>
 
 

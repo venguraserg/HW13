@@ -23,7 +23,7 @@ namespace HW13WPF.Services
                 string tempGuid = Guid.NewGuid().ToString();
                 string[] stringMassive = tempGuid.Split(new char[] { '-' });
 
-                Clients.Add(new Client(stringMassive[0], stringMassive[1])); ;
+                Clients.Add(new Client(stringMassive[0], stringMassive[1], stringMassive[2], stringMassive[3], stringMassive[4])); ;
             }
             Save(FILE_NAME, Clients);
             return Clients;
