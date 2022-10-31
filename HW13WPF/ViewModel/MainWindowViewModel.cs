@@ -42,6 +42,8 @@ namespace HW13WPF.ViewModel
             set
             {
                 selectedClient = value;
+                var ddd = Accounts.Where(i => i.IdClient == selectedClient.Id);
+                //SelectedClientAccounts = 
                 OnPropertyChanged("SelectedClient");
             }
         }
@@ -56,11 +58,10 @@ namespace HW13WPF.ViewModel
         }
         public ObservableCollection<Account> SelectedClientAccounts
         {
-            get
-            {
-               return selectedClient!=null ? (ObservableCollection<Account>)Accounts.Where(i => i.Id == selectedClient.Id) : null;
-            }
-                
+            get => selectedClientAccounts;
+
+
+
             set
             {
                 selectedClientAccounts = value;
