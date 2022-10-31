@@ -15,7 +15,7 @@ namespace HW13WPF.Model
         private string patronymic;
         private string phoneNumber;
         private string passNumber;
-        private ICollection<Guid> accountsId;
+        private ObservableCollection<Guid> accountsId;
 
         public Guid Id
         {
@@ -71,7 +71,7 @@ namespace HW13WPF.Model
                 OnPropertyChanged("PassNumber");
             }
         }
-        public ICollection<Guid> AccountsId
+        public ObservableCollection<Guid> AccountsId
         {
             get => accountsId;
             set

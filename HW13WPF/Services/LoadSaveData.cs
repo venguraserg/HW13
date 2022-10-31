@@ -47,9 +47,9 @@ namespace HW13WPF.Services
 
             for (int i = 0; i < clients.Count; i++)
             {
-                for (int j = 0; j < rnd.Next(1, 4); j++)
+                for (int j = 0; j < rnd.Next(1, 5); j++)
                 {
-                    var newAccount = new Account(AccountCurrency.BYN, clients[i].Id);
+                    Account newAccount = new Account((AccountCurrency)j, clients[i].Id);
                     clients[i].AccountsId.Add(newAccount.Id);
                     accounts.Add(newAccount);
                 }

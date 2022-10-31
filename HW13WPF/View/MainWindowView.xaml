@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:HW13WPF"
         mc:Ignorable="d"
         Title="Банковская система" 
-        Height="800" 
+        Height="750" 
         Width="800" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" >
@@ -75,9 +75,8 @@
                         </GroupBox>
                         <UniformGrid>
                             <Button Margin="3" Content="Редактировать" Command="{Binding UpdateSelectClientCommand}"></Button>
-                            <Button Margin="3" Content="Удалить" Command="{Binding DeleteSelectClientCommand}"></Button>
+                            <Button Margin="3" Content="Удалить" Command="{Binding DeleteSelectedClientCommand}"></Button>
                         </UniformGrid>
-                        <TextBlock Grid.Column="0" Margin="1" Text="{Binding SelectedClientAccounts.Count}"></TextBlock>
                     </StackPanel>
                     
                     <GroupBox Header="Счета" Grid.Column="1" Margin="1">

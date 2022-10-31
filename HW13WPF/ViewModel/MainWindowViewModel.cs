@@ -42,8 +42,18 @@ namespace HW13WPF.ViewModel
             set
             {
                 selectedClient = value;
-                var ddd = Accounts.Where(i => i.IdClient == selectedClient.Id);
-                //SelectedClientAccounts = 
+                SelectedClientAccounts.Clear();
+                if (SelectedClient != null)
+                {
+                    foreach (Account item in Accounts)
+                    {
+                        if (item.IdClient == selectedClient.Id)
+                        {
+                            SelectedClientAccounts.Add(item);
+                        }
+                    }
+                }
+                           
                 OnPropertyChanged("SelectedClient");
             }
         }
@@ -59,9 +69,6 @@ namespace HW13WPF.ViewModel
         public ObservableCollection<Account> SelectedClientAccounts
         {
             get => selectedClientAccounts;
-
-
-
             set
             {
                 selectedClientAccounts = value;
@@ -73,7 +80,7 @@ namespace HW13WPF.ViewModel
 
         #region Команды
         /// <summary>
-        /// Добавление нового клиента
+        /// Команда закрыть приложение
         /// </summary>
         public ICommand CloseAppCommand { get; }
         private void OnCloseAppCommandExecuted(object p)
@@ -82,19 +89,36 @@ namespace HW13WPF.ViewModel
         }
         private bool CanCloseAppCommandExecute(object p) => true;
 
+
+        /// <summary>
+        /// Команда Удаления клиента
+        /// </summary>
+        public ICommand DeleteSelectedClientCommand { get; }
+        private void OnDeleteSelectedClientCommandExecuted(object p)
+        {
+            //Доработать удаление из списка счетов.
+            //Accounts.
+            Clients.Remove(SelectedClient);
+        }
+        private bool CanDeleteSelectedClientCommandExecute(object p) => SelectedClient is Client;
         #endregion
 
         public MainWindowViewModel()
         {
             #region Команды
             CloseAppCommand = new LambdaCommand(OnCloseAppCommandExecuted, CanCloseAppCommandExecute);
+            DeleteSelectedClientCommand = new LambdaCommand(OnDeleteSelectedClientCommandExecuted, CanDeleteSelectedClientCommandExecute);
             #endregion
 
-            
+            //Инициализация свойств
             Clients = new ObservableCollection<Client>();
             Accounts = new ObservableCollection<Account>();
-            
+            SelectedClientAccounts = new ObservableCollection<Account>();
+
+            //Загрузка списка клиентов из файла
             Clients = LoadSaveData.Load<Client>(CLIENT_FILE_NAME);
+
+            //Если записей нет, для теста автозаполнение
             if(Clients.Count == 0)
             {
                 if (MessageBox.Show("Список клиентов пуст\nЗаполнить Автоматически?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
@@ -102,7 +126,7 @@ namespace HW13WPF.ViewModel
                     LoadSaveData.ClientAutofill(100);
                     Clients = LoadSaveData.Load<Client>(CLIENT_FILE_NAME);
 
-                    if (MessageBox.Show("Список акаунтов пуст\nЗаполнить Автоматически?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Список счетов пуст\nЗаполнить Автоматически?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
                         Clients = LoadSaveData.AccountAutofill(Clients);
                         LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
@@ -111,6 +135,7 @@ namespace HW13WPF.ViewModel
 
                 }
             }
+            ///Загрузка списка счетов из файла
             Accounts = LoadSaveData.Load<Account>(ACCOUNT_FILE_NAME);
 
 
