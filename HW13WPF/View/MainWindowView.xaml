@@ -23,11 +23,7 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" >
-            <MenuItem Header="Close">
-               <!-- <MenuItem.Command>
-                    <cmd:CloseAppCommand/>
-                </MenuItem.Command> -->
-            </MenuItem> 
+            <MenuItem Header="Close" Command="{Binding CloseAppCommand}"/>
         </Menu>
         <GroupBox Grid.Row="1" Header="Список клиентов"
                   Margin="5">
@@ -81,10 +77,11 @@
                             <Button Margin="3" Content="Редактировать" Command="{Binding UpdateSelectClientCommand}"></Button>
                             <Button Margin="3" Content="Удалить" Command="{Binding DeleteSelectClientCommand}"></Button>
                         </UniformGrid>
-
+                        <TextBlock Grid.Column="0" Margin="1" Text="{Binding SelectedClientAccounts.Count}"></TextBlock>
                     </StackPanel>
+                    
                     <GroupBox Header="Счета" Grid.Column="1" Margin="1">
-                        <ListView ItemsSource="{Binding SelectedClient.AccountsId}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                        <ListView ItemsSource="{Binding SelectedClientAccounts}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>

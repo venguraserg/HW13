@@ -15,19 +15,51 @@ namespace HW13WPF.Services
         /// Автозаполнение клиентов для теста
         /// </summary>
         /// <param name="number"></param>
-        public static ObservableCollection<Client> ClientAutofill(int number , string FILE_NAME)
+        public static void ClientAutofill(int number)
         {
-            var Clients = new ObservableCollection<Client>();
+            var clients = new ObservableCollection<Client>();           
+
+            
             for (int i = 0; i < number; i++)
             {
                 string tempGuid = Guid.NewGuid().ToString();
                 string[] stringMassive = tempGuid.Split(new char[] { '-' });
+                var newClient = new Client("Name" + stringMassive[0].ToString(),
+                                           "Surname" + stringMassive[1].ToString(),
+                                           "Pat" + stringMassive[2].ToString(),
+                                           "Ph#" + stringMassive[3].ToString(),
+                                           "N_pass" + stringMassive[4].ToString());
 
-                Clients.Add(new Client(stringMassive[0], stringMassive[1], stringMassive[2], stringMassive[3], stringMassive[4])); ;
+                clients.Add(newClient);
             }
-            Save(FILE_NAME, Clients);
-            return Clients;
+            Save("client_data.json", clients);           
+
         }
+        /// <summary>
+        /// Автозаполнение счетов для теста
+        /// </summary>
+        /// <param name="number"></param>
+        public static ObservableCollection<Client> AccountAutofill(ObservableCollection<Client> clients)
+        {
+            var accounts = new ObservableCollection<Account>();
+
+            var rnd = new Random();
+
+            for (int i = 0; i < clients.Count; i++)
+            {
+                for (int j = 0; j < rnd.Next(1, 4); j++)
+                {
+                    var newAccount = new Account(AccountCurrency.BYN, clients[i].Id);
+                    clients[i].AccountsId.Add(newAccount.Id);
+                    accounts.Add(newAccount);
+                }
+            }
+           
+            Save("acount_data.json", accounts);
+            return clients;
+
+        }
+
         /// <summary>
         /// Десериализация данных их файла
         /// </summary>
