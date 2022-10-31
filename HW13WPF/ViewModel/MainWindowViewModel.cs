@@ -15,6 +15,7 @@ namespace HW13WPF.ViewModel
         private const string FILE_NAME = "data.json";
 
         private ObservableCollection<Client> clients;
+        private ObservableCollection<Account> accounts;
         private Client selectedClient;
         public ObservableCollection<Client> Clients
         {

@@ -11,40 +11,143 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
-        <Menu>
-            <MenuItem Header="Выход" />
+
+        <Menu Grid.Row="0" >
+            <MenuItem Header="Close">
+               <!-- <MenuItem.Command>
+                    <cmd:CloseAppCommand/>
+                </MenuItem.Command> -->
+            </MenuItem> 
         </Menu>
-        <ListView ItemsSource="{Binding Clients}" 
-                  SelectedItem="{Binding SelectedClient}"
-                  Margin="5" 
-                  Grid.Row="1" 
-                  Grid.ColumnSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Width="300">Id</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SurName}" >Фамилия</GridViewColumn>
-                       <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">Имя</GridViewColumn>
-                 </GridView>
-            </ListView.View>
-        </ListView>
-        <GroupBox Header="Клиент" Margin="5" Grid.Row="2"  Grid.ColumnSpan="2">
-            <TabControl Margin="3">
-                <TabItem Header="Редактировть/Удалить">
-                    
-                </TabItem>
-                <TabItem Header="Добавить нового">
-                    
-                </TabItem>
-            </TabControl>
+        <GroupBox Grid.Row="1" Header="Список клиентов"
+                  Margin="5">
+            <ListView x:Name="clientList" 
+                          ItemsSource="{Binding Clients}"  
+                          SelectedItem="{Binding SelectedClient}"
+                          >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Surname}"  Width="100">Фамилия</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Имя</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Patronymic}" Width="100">Отчество</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Width="100">№ телефона</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=PassNumber}" Width="100">№ паспорта</GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </GroupBox>
+        <TabControl Margin="5" MinHeight="300" Grid.Row="2">
+            <TabItem Header="Редактирование">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Grid.RowSpan="2">
+                        <GroupBox Header="ID" Margin="1">
+                            <TextBox Text="{Binding SelectedClient.Id}" Margin="1"/>
+                        </GroupBox>
+                        <GroupBox Header="Фамилия" Margin="1">
+                            <TextBox Text="{Binding SelectedClient.SurName}" Margin="1"/>
+                        </GroupBox>
+                        <GroupBox Header="Имя" Margin="1">
+                            <TextBox Text="{Binding SelectedClient.Name}" Margin="1"/>
+                        </GroupBox>
+                        <GroupBox Header="Отчество" Margin="1">
+                            <TextBox Text="{Binding SelectedClient.Patronymic}" Margin="1"/>
+                        </GroupBox>
+                        <GroupBox Header="Номер телефона" Margin="1">
+                            <TextBox Text="{Binding SelectedClient.PhoneNumber}" Margin="1"/>
+                        </GroupBox>
+                        <GroupBox Header="Номер пасспорта" Margin="1">
+                            <TextBox Text="{Binding SelectedClient.PassNumber}" Margin="1"/>
+                        </GroupBox>
+                        <UniformGrid>
+                            <Button Margin="3" Content="Редактировать" Command="{Binding UpdateSelectClientCommand}"></Button>
+                            <Button Margin="3" Content="Удалить" Command="{Binding DeleteSelectClientCommand}"></Button>
+                        </UniformGrid>
+
+                    </StackPanel>
+                    <GroupBox Header="Счета" Grid.Column="1" Margin="1">
+                        <ListView ItemsSource="{Binding SelectedClient.Accounts}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Currency}"  Width="100">Валюта</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=AccountBalance}"  Width="100">Колво средств</GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </GroupBox>
+                    <GroupBox Header="Действия по счетам" Margin="1" Grid.Row="1" Grid.Column="1">
+                        <TabControl >
+                            <TabItem Header="Добавить">
+                                <Button Content="Удалить" Margin="5"/>
+                            </TabItem>
+                            <TabItem Header="Добавить">
+
+                            </TabItem>
+                            <TabItem Header="Добавить">
+
+                            </TabItem>
+                            <TabItem Header="Добавить">
+
+                            </TabItem>
+                        </TabControl>
+                    </GroupBox>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Новый клиент">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" >
+                        <GroupBox Header="Фамилия" Margin="2">
+                            <TextBox Text="{Binding NewClientSurName}"/>
+                        </GroupBox>
+                        <GroupBox Header="Имя" Margin="2">
+                            <TextBox Text="{Binding NewClientName}"/>
+                        </GroupBox>
+                        <GroupBox Header="Отчество" Margin="2">
+                            <TextBox Text="{Binding NewClientPatronymic}"/>
+                        </GroupBox>
+                        <GroupBox Header="Номер телефона" Margin="2">
+                            <TextBox <!-- Text="{Binding NewClientPhoneNumber}" -->/>
+                        </GroupBox>
+                        <GroupBox Header="Номер паспорта" Margin="2" >
+                            <TextBox <!-- Text="{Binding NewClientPassNuber}" -->/>
+                        </GroupBox>
+
+
+
+
+                        <Button Content="Add" Margin="0" Command="{Binding AddClientCommand}"/>
+
+                    </StackPanel>
+                </Grid>
+
+
+            </TabItem>
+            <TabItem Header="123">
+
+            </TabItem>
+        </TabControl>
+
+
     </Grid>
 </Window>
