@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:HW13WPF"
         mc:Ignorable="d"
         Title="Банковская система" 
-        Height="750" 
+        Height="850" 
         Width="800" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" >
@@ -23,7 +23,8 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" >
-            <MenuItem Header="Close" Command="{Binding CloseAppCommand}"/>
+            <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"/>
+            <MenuItem Header="Сохранить измения" Command="{Binding UpdateSelectClientCommand}"/>
         </Menu>
         <GroupBox Grid.Row="1" Header="Список клиентов"
                   Margin="5">
@@ -73,14 +74,14 @@
                         <GroupBox Header="Номер пасспорта" Margin="1">
                             <TextBox Text="{Binding SelectedClient.PassNumber}" Margin="1"/>
                         </GroupBox>
-                        <UniformGrid>
-                            <Button Margin="3" Content="Редактировать" Command="{Binding UpdateSelectClientCommand}"></Button>
-                            <Button Margin="3" Content="Удалить" Command="{Binding DeleteSelectedClientCommand}"></Button>
-                        </UniformGrid>
+                        
+                        <Button Margin="7" Content="Удалить" Command="{Binding DeleteSelectedClientCommand}"></Button>
+                        
+                        
                     </StackPanel>
                     
                     <GroupBox Header="Счета" Grid.Column="1" Margin="1">
-                        <ListView ItemsSource="{Binding SelectedClientAccounts}">
+                        <ListView ItemsSource="{Binding SelectedClientAccounts}" SelectedItem="{Binding SelectedAccount}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>
@@ -93,18 +94,27 @@
                     </GroupBox>
                     <GroupBox Header="Действия по счетам" Margin="1" Grid.Row="1" Grid.Column="1">
                         <TabControl >
-                            <TabItem Header="Добавить">
-                                <Button Content="Удалить" Margin="5"/>
+                            <TabItem Header="Открыть/закрыть">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Button Command="{Binding AddAccountCommand}" Content="Add" Grid.Column="0" Grid.Row="0" Margin="10"></Button>
+                                    <Button Content="Remove" Grid.Column="1" Grid.Row="0" Margin="10"></Button>
+                                </Grid>
                             </TabItem>
-                            <TabItem Header="Добавить">
+                            <TabItem Header="Пополнить счет">
 
                             </TabItem>
-                            <TabItem Header="Добавить">
+                            <TabItem Header="Перевод средств">
 
                             </TabItem>
-                            <TabItem Header="Добавить">
-
-                            </TabItem>
+                            
                         </TabControl>
                     </GroupBox>
 
@@ -130,21 +140,22 @@
                             <TextBox Text="{Binding NewClientPhoneNumber}"/>
                         </GroupBox>
                         <GroupBox Header="Номер паспорта" Margin="2" >
-                            <TextBox  Text="{Binding NewClientPassNuber}" />
+                            <TextBox  Text="{Binding NewClientPassNumber}" />
                         </GroupBox>
 
 
 
 
-                        <Button Content="Add" Margin="0" Command="{Binding AddClientCommand}"/>
+                        <Button Content="Добавить клиента" Margin="9,0" Command="{Binding AddClientCommand}"/>
 
                     </StackPanel>
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Aquamarine" Margin="30">
+                        <TextBlock Text="Место для рекламы" 
+                                   FontSize="21" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                    </Border>
                 </Grid>
-
-
-            </TabItem>
-            <TabItem Header="123">
-
             </TabItem>
         </TabControl>
 

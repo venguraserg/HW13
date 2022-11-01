@@ -1,20 +1,17 @@
 ﻿using HW13WPF.Command;
 using HW13WPF.Model;
 using HW13WPF.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
 namespace HW13WPF.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
-    {   
+    {
         /// <summary>
         /// Поля имени фалов данных
         /// </summary>
@@ -22,11 +19,15 @@ namespace HW13WPF.ViewModel
         private const string ACCOUNT_FILE_NAME = "acount_data.json";
 
         #region Поля и свойства
+        
+        private ObservableCollection<Client> clients;                   //Поле коллекции клиентов
+        private ObservableCollection<Account> accounts;                 //Поле коллекции счетов
+        private Client selectedClient;                                  //Поле выделенного клиента
+        private ObservableCollection<Account> selectedClientAccounts;   //Поле счетов выделенного клинта
+        private Account selectedAccount;                                //Поле выделенного счета
 
-        private ObservableCollection<Client> clients;
-        private ObservableCollection<Account> accounts;
-        private Client selectedClient;
-        private ObservableCollection<Account> selectedClientAccounts;
+        
+
         public ObservableCollection<Client> Clients
         {
             get => clients;
@@ -43,6 +44,7 @@ namespace HW13WPF.ViewModel
             {
                 selectedClient = value;
                 SelectedClientAccounts.Clear();
+                
                 if (SelectedClient != null)
                 {
                     foreach (Account item in Accounts)
@@ -53,7 +55,7 @@ namespace HW13WPF.ViewModel
                         }
                     }
                 }
-                           
+
                 OnPropertyChanged("SelectedClient");
             }
         }
@@ -75,6 +77,70 @@ namespace HW13WPF.ViewModel
                 OnPropertyChanged("SelectedClientAccount");
             }
         }
+        public Account SelectedAccount
+        {
+            get => selectedAccount;
+            set
+            {
+                selectedAccount = value;
+                OnPropertyChanged("SelectedAccount");
+            }
+        }
+        #endregion
+
+        #region Поля и свойства нового клиента
+        private string newClientName;
+        private string newClientSurName;
+        private string newClientPatronymic;
+        private string newClientPhoneNumber;
+        private string newClientPassNumber;
+
+        public string NewClientName
+        {
+            get => newClientName;
+            set
+            {
+                newClientName = value;
+                OnPropertyChanged("NewClientName");
+            }
+        }
+        public string NewClientSurName
+        {
+            get => newClientSurName;
+            set
+            {
+                newClientSurName = value;
+                OnPropertyChanged("NewClientSurName");
+            }
+        }
+        public string NewClientPatronymic
+        {
+            get => newClientPatronymic;
+            set
+            {
+                newClientPatronymic = value;
+                OnPropertyChanged("NewClientPatronymic");
+            }
+        }
+        public string NewClientPhoneNumber
+        {
+            get => newClientPhoneNumber;
+            set
+            {
+                newClientPhoneNumber = value;
+                OnPropertyChanged("NewClientPhoneNumber");
+            }
+        }
+        public string NewClientPassNumber
+        {
+            get => newClientPassNumber;
+            set
+            {
+                newClientPassNumber = value;
+                OnPropertyChanged("NewClientPassNumber");
+            }
+        }
+
         #endregion
 
 
@@ -96,11 +162,65 @@ namespace HW13WPF.ViewModel
         public ICommand DeleteSelectedClientCommand { get; }
         private void OnDeleteSelectedClientCommandExecuted(object p)
         {
-            //Доработать удаление из списка счетов.
-            //Accounts.
-            Clients.Remove(SelectedClient);
+            if(MessageBox.Show("Удалить клиента","Удалить?",MessageBoxButton.YesNo,MessageBoxImage.Information) == MessageBoxResult.Yes)
+            {
+                var removedAccount = Accounts.Where(i => i.IdClient == selectedClient.Id).ToList();
+                for (int i = 0; i < removedAccount.Count; i++)
+                {
+                    Accounts.Remove(removedAccount[i]);
+                }
+
+                Clients.Remove(SelectedClient);
+
+                LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
+                LoadSaveData.Save(ACCOUNT_FILE_NAME, Accounts);
+            }
+            
         }
         private bool CanDeleteSelectedClientCommandExecute(object p) => SelectedClient is Client;
+                
+        /// <summary>
+        /// Команда изменеия клиента
+        /// </summary>
+        public ICommand UpdateSelectClientCommand { get; }
+        private void OnUpdateSelectClientCommandExecuted(object p)
+        {
+            LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
+            LoadSaveData.Save(ACCOUNT_FILE_NAME, Accounts);
+        }
+        private bool CanUpdateSelectClientCommandExecute(object p) => true;
+        
+        /// <summary>
+        /// Команда изменеия клиента
+        /// </summary>
+        public ICommand AddClientCommand { get; }
+        private void OnAddClientCommandExecuted(object p)
+        {
+            var client = new Client(NewClientName, NewClientSurName, NewClientPatronymic, NewClientPhoneNumber, NewClientPassNumber);
+            Clients.Insert(0, client);
+            LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
+        }
+        private bool CanAddClientCommandExecute(object p) => !(NewClientName==null || 
+                                                              NewClientSurName == null ||
+                                                              NewClientPatronymic == null ||
+                                                              NewClientPhoneNumber == null ||
+                                                              NewClientPassNumber == null);
+
+        /// <summary>
+        /// Команда открытия счета клиента
+        /// </summary>
+        public ICommand AddAccountCommand { get; }
+        private void OnAddAccountCommandExecuted(object p)
+        {
+            var newAccount = new Account(AccountCurrency.BYN, SelectedClient.Id);
+            Accounts.Add(newAccount);
+            SelectedClient.AccountsId.Add(newAccount.Id);
+        }
+        private bool CanAddAccountCommandExecute(object p) => true;
+
+
+
+
         #endregion
 
         public MainWindowViewModel()
@@ -108,6 +228,9 @@ namespace HW13WPF.ViewModel
             #region Команды
             CloseAppCommand = new LambdaCommand(OnCloseAppCommandExecuted, CanCloseAppCommandExecute);
             DeleteSelectedClientCommand = new LambdaCommand(OnDeleteSelectedClientCommandExecuted, CanDeleteSelectedClientCommandExecute);
+            UpdateSelectClientCommand = new LambdaCommand(OnUpdateSelectClientCommandExecuted, CanUpdateSelectClientCommandExecute);
+            AddClientCommand = new LambdaCommand(OnAddClientCommandExecuted, CanAddClientCommandExecute);
+            AddAccountCommand = new LambdaCommand(OnAddAccountCommandExecuted, CanAddAccountCommandExecute);
             #endregion
 
             //Инициализация свойств
@@ -119,7 +242,7 @@ namespace HW13WPF.ViewModel
             Clients = LoadSaveData.Load<Client>(CLIENT_FILE_NAME);
 
             //Если записей нет, для теста автозаполнение
-            if(Clients.Count == 0)
+            if (Clients.Count == 0)
             {
                 if (MessageBox.Show("Список клиентов пуст\nЗаполнить Автоматически?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
@@ -130,7 +253,7 @@ namespace HW13WPF.ViewModel
                     {
                         Clients = LoadSaveData.AccountAutofill(Clients);
                         LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
-                        
+
                     }
 
                 }
