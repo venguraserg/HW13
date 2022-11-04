@@ -17,6 +17,7 @@ namespace HW13WPF.ViewModel
         //поля имени файла для хранения данных
         private const string CLIENT_FILE_NAME = "client_data.json";
         private const string ACCOUNT_FILE_NAME = "acount_data.json";
+        private ObservableCollection<AccountCurrency> currency = new ObservableCollection<AccountCurrency> { AccountCurrency.BYN, AccountCurrency.USD, AccountCurrency.EUR, AccountCurrency.RUR};
 
         private ObservableCollection<Client> clients;                   //Поле коллекции клиентов
         private ObservableCollection<Account> accounts;                 //Поле коллекции счетов
@@ -29,7 +30,8 @@ namespace HW13WPF.ViewModel
         private string newClientPatronymic;
         private string newClientPhoneNumber;
         private string newClientPassNumber;
-
+        //Новый счет
+        public ObservableCollection<AccountCurrency> Currency{ get => currency; }
         /// <summary>
         /// Список клиентов
         /// </summary>
@@ -274,6 +276,7 @@ namespace HW13WPF.ViewModel
             var newAccount = new Account(AccountCurrency.BYN, SelectedClient.Id);
             Accounts.Add(newAccount);
             SelectedClient.AccountsId.Add(newAccount.Id);
+            
         }
         private bool CanAddAccountCommandExecute(object p) => true;
 

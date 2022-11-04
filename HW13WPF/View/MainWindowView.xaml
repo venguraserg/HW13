@@ -81,7 +81,9 @@
                     </StackPanel>
                     
                     <GroupBox Header="Счета" Grid.Column="1" Margin="1">
-                        <ListView ItemsSource="{Binding SelectedClientAccounts}" SelectedItem="{Binding SelectedAccount}">
+                        <ListView ItemsSource="{Binding SelectedClientAccounts}" 
+                                  SelectedItem="{Binding SelectedAccount}"
+                                  x:Name="LV_Account"   >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>
@@ -104,8 +106,14 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <Button Command="{Binding AddAccountCommand}" Content="Add" Grid.Column="0" Grid.Row="0" Margin="10"></Button>
+                                    <Button Command="{Binding AddAccountCommand}" 
+                                            Content="Add" 
+                                            Grid.Column="0" 
+                                            Grid.Row="0" 
+                                            Margin="10"></Button>
                                     <Button Content="Remove" Grid.Column="1" Grid.Row="0" Margin="10"></Button>
+                                    <ComboBox x:Name="CB1" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Currency}" Margin="10,25" />
+                                    <TextBlock Text="{Binding ElementName=CB1, Path=SelectedItem}" Grid.Column="1" Grid.Row="1" Margin="20"/>
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Пополнить счет">
