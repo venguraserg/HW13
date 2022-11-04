@@ -186,13 +186,13 @@
                               Margin="5">
                         <ListView  
                           ItemsSource="{Binding Accounts}"  
-                          SelectedItem="{Binding SelectedClient}">
+                          SelectedItem="{Binding SelectedAccount2}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Фамилия</GridViewColumn>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=AccountBalance}" Width="100">Имя</GridViewColumn>
                                     <GridViewColumn DisplayMemberBinding="{Binding Path=Currency}" Width="100">Отчество</GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="" Width="100">№ телефона</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Currency}" Width="100">№ телефона</GridViewColumn>
                                     
                                 </GridView>
                             </ListView.View>

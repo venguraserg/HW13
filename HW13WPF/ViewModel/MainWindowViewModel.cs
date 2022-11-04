@@ -24,6 +24,7 @@ namespace HW13WPF.ViewModel
         private Client selectedClient;                                  //Поле выделенного клиента
         private ObservableCollection<Account> selectedClientAccounts;   //Поле счетов выделенного клинта
         private Account selectedAccount;                                //Поле выделенного счета
+        private Account selectedAccount2;
         // Поля нового клиента
         private string newClientName;
         private string newClientSurName;
@@ -104,6 +105,18 @@ namespace HW13WPF.ViewModel
             }
         }
         /// <summary>
+        /// Выделеный счет выделеного клиента
+        /// </summary>
+        public Account SelectedAccount2
+        {
+            get => selectedAccount2;
+            set
+            {
+                selectedAccount2 = value;
+                OnPropertyChanged("SelectedAccount2");
+            }
+        }
+        /// <summary>
         /// Имя нового клиента
         /// </summary>
         public string NewClientName
@@ -170,7 +183,9 @@ namespace HW13WPF.ViewModel
         {
             get
             {
-                Clients.Where(i=>i.AccountsId)
+               var sss =  Accounts.First(i => i.IdClient == SelectedAccount2.Id);
+                
+                    return tempClient;
             }
             set
             {
