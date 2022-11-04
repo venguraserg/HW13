@@ -14,159 +14,194 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="350"/>
-            <RowDefinition Height="*"/>
-
-        </Grid.RowDefinitions>
-
+    <StackPanel>
         <Menu Grid.Row="0" >
             <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"/>
             <MenuItem Header="Сохранить измения" Command="{Binding UpdateSelectClientCommand}"/>
         </Menu>
-        <GroupBox Grid.Row="1" Header="Список клиентов"
-                  Margin="5">
-            <ListView x:Name="clientList" 
+        <TabControl>
+            <TabItem Header="Клиенты">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="350"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    
+                    <GroupBox Grid.Row="1" 
+                              Header="Список клиентов"
+                              Margin="5">
+                        <ListView x:Name="LV_ClientList" 
                           ItemsSource="{Binding Clients}"  
                           SelectedItem="{Binding SelectedClient}"
                           >
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=SurName}"  Width="100">Фамилия</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Имя</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Patronymic}" Width="100">Отчество</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Width="100">№ телефона</GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=PassNumber}" Width="100">№ паспорта</GridViewColumn>
-
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </GroupBox>
-        <TabControl Margin="5" MinHeight="300" Grid.Row="2">
-            <TabItem Header="Редактирование">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Column="0" Grid.RowSpan="2">
-                        <GroupBox Header="ID" Margin="1">
-                            <TextBox Text="{Binding SelectedClient.Id}" Margin="1"/>
-                        </GroupBox>
-                        <GroupBox Header="Фамилия" Margin="1">
-                            <TextBox Text="{Binding SelectedClient.SurName}" Margin="1"/>
-                        </GroupBox>
-                        <GroupBox Header="Имя" Margin="1">
-                            <TextBox Text="{Binding SelectedClient.Name}" Margin="1"/>
-                        </GroupBox>
-                        <GroupBox Header="Отчество" Margin="1">
-                            <TextBox Text="{Binding SelectedClient.Patronymic}" Margin="1"/>
-                        </GroupBox>
-                        <GroupBox Header="Номер телефона" Margin="1">
-                            <TextBox Text="{Binding SelectedClient.PhoneNumber}" Margin="1"/>
-                        </GroupBox>
-                        <GroupBox Header="Номер пасспорта" Margin="1">
-                            <TextBox Text="{Binding SelectedClient.PassNumber}" Margin="1"/>
-                        </GroupBox>
-                        
-                        <Button Margin="7" Content="Удалить" Command="{Binding DeleteSelectedClientCommand}"></Button>
-                        
-                        
-                    </StackPanel>
-                    
-                    <GroupBox Header="Счета" Grid.Column="1" Margin="1">
-                        <ListView ItemsSource="{Binding SelectedClientAccounts}" 
-                                  SelectedItem="{Binding SelectedAccount}"
-                                  x:Name="LV_Account"   >
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Currency}"  Width="100">Валюта</GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=AccountBalance}"  Width="100">Колво средств</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=SurName}"  Width="100">Фамилия</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Имя</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Patronymic}" Width="100">Отчество</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=PhoneNumber}" Width="100">№ телефона</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=PassNumber}" Width="100">№ паспорта</GridViewColumn>
+
                                 </GridView>
                             </ListView.View>
                         </ListView>
-
                     </GroupBox>
-                    <GroupBox Header="Действия по счетам" Margin="1" Grid.Row="1" Grid.Column="1">
-                        <TabControl >
-                            <TabItem Header="Открыть/закрыть">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Button Command="{Binding AddAccountCommand}" 
+                    <TabControl Margin="5" MinHeight="300" Grid.Row="2">
+                        <TabItem Header="Редактирование">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Column="0" Grid.RowSpan="2">
+                                    <GroupBox Header="ID" Margin="1">
+                                        <TextBox Text="{Binding SelectedClient.Id}" Margin="1"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Фамилия" Margin="1">
+                                        <TextBox Text="{Binding SelectedClient.SurName}" Margin="1"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Имя" Margin="1">
+                                        <TextBox Text="{Binding SelectedClient.Name}" Margin="1"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Отчество" Margin="1">
+                                        <TextBox Text="{Binding SelectedClient.Patronymic}" Margin="1"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Номер телефона" Margin="1">
+                                        <TextBox Text="{Binding SelectedClient.PhoneNumber}" Margin="1"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Номер пасспорта" Margin="1">
+                                        <TextBox Text="{Binding SelectedClient.PassNumber}" Margin="1"/>
+                                    </GroupBox>
+
+                                    <Button Margin="7" Content="Удалить" Command="{Binding DeleteSelectedClientCommand}"></Button>
+
+
+                                </StackPanel>
+
+                                <GroupBox Header="Счета" Grid.Column="1" Margin="1">
+                                    <ListView ItemsSource="{Binding SelectedClientAccounts}" 
+                                  SelectedItem="{Binding SelectedAccount}"
+                                  x:Name="LV_Account"   >
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Номер счета</GridViewColumn>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Path=Currency}"  Width="100">Валюта</GridViewColumn>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Path=AccountBalance}"  Width="100">Колво средств</GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+
+                                </GroupBox>
+                                <GroupBox Header="Действия по счетам" Margin="1" Grid.Row="1" Grid.Column="1">
+                                    <TabControl >
+                                        <TabItem Header="Открыть/закрыть">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Button Command="{Binding AddAccountCommand}" 
                                             Content="Add" 
                                             Grid.Column="0" 
                                             Grid.Row="0" 
                                             Margin="10"></Button>
-                                    <Button Content="Remove" Grid.Column="1" Grid.Row="0" Margin="10"></Button>
-                                    <ComboBox x:Name="CB1" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Currency}" Margin="10,25" />
-                                    <TextBlock Text="{Binding ElementName=CB1, Path=SelectedItem}" Grid.Column="1" Grid.Row="1" Margin="20"/>
-                                </Grid>
-                            </TabItem>
-                            <TabItem Header="Пополнить счет">
+                                                <Button Content="Remove" Grid.Column="1" Grid.Row="0" Margin="10"></Button>
+                                                <ComboBox x:Name="CB1" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Currency}" Margin="10,25" />
+                                                <TextBlock Text="{Binding ElementName=CB1, Path=SelectedItem}" Grid.Column="1" Grid.Row="1" Margin="20"/>
+                                            </Grid>
+                                        </TabItem>
+                                        <TabItem Header="Пополнить счет">
 
-                            </TabItem>
-                            <TabItem Header="Перевод средств">
+                                        </TabItem>
+                                        <TabItem Header="Перевод средств">
 
-                            </TabItem>
-                            
-                        </TabControl>
-                    </GroupBox>
+                                        </TabItem>
 
-                </Grid>
-            </TabItem>
-            <TabItem Header="Новый клиент">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" >
-                        <GroupBox Header="Фамилия" Margin="2">
-                            <TextBox Text="{Binding NewClientSurName}"/>
-                        </GroupBox>
-                        <GroupBox Header="Имя" Margin="2">
-                            <TextBox Text="{Binding NewClientName}"/>
-                        </GroupBox>
-                        <GroupBox Header="Отчество" Margin="2">
-                            <TextBox Text="{Binding NewClientPatronymic}"/>
-                        </GroupBox>
-                        <GroupBox Header="Номер телефона" Margin="2">
-                            <TextBox Text="{Binding NewClientPhoneNumber}"/>
-                        </GroupBox>
-                        <GroupBox Header="Номер паспорта" Margin="2" >
-                            <TextBox  Text="{Binding NewClientPassNumber}" />
-                        </GroupBox>
+                                    </TabControl>
+                                </GroupBox>
 
-
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Новый клиент">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" >
+                                    <GroupBox Header="Фамилия" Margin="2">
+                                        <TextBox Text="{Binding NewClientSurName}"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Имя" Margin="2">
+                                        <TextBox Text="{Binding NewClientName}"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Отчество" Margin="2">
+                                        <TextBox Text="{Binding NewClientPatronymic}"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Номер телефона" Margin="2">
+                                        <TextBox Text="{Binding NewClientPhoneNumber}"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Номер паспорта" Margin="2" >
+                                        <TextBox  Text="{Binding NewClientPassNumber}" />
+                                    </GroupBox>
 
 
-                        <Button Content="Добавить клиента" Margin="9,0" Command="{Binding AddClientCommand}"/>
 
-                    </StackPanel>
-                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Aquamarine" Margin="30">
-                        <TextBlock Text="Место для рекламы" 
+
+                                    <Button Content="Добавить клиента" Margin="9,0" Command="{Binding AddClientCommand}"/>
+
+                                </StackPanel>
+                                <Border Grid.Column="1" Grid.Row="1" BorderBrush="Aquamarine" Margin="30">
+                                    <TextBlock Text="Место для рекламы" 
                                    FontSize="21" 
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"/>
-                    </Border>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+
                 </Grid>
             </TabItem>
+            <TabItem Header="Счета">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="0" 
+                              Header="Список счетов"
+                              Margin="5">
+                        <ListView  
+                          ItemsSource="{Binding Accounts}"  
+                          SelectedItem="{Binding SelectedClient}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=AccountNumber}"  Width="100">Фамилия</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=AccountBalance}" Width="100">Имя</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Currency}" Width="100">Отчество</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="" Width="100">№ телефона</GridViewColumn>
+                                    
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                </Grid>
+                
+            </TabItem>
         </TabControl>
-
-
-    </Grid>
+    </StackPanel>
+    
 </Window>

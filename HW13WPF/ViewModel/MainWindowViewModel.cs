@@ -30,6 +30,8 @@ namespace HW13WPF.ViewModel
         private string newClientPatronymic;
         private string newClientPhoneNumber;
         private string newClientPassNumber;
+
+        private Client tempClient;
         //Новый счет
         public ObservableCollection<AccountCurrency> Currency{ get => currency; }
         /// <summary>
@@ -161,6 +163,24 @@ namespace HW13WPF.ViewModel
                 OnPropertyChanged("NewClientPassNumber");
             }
         }
+        /// <summary>
+        /// Номер паспорта нового клиента
+        /// </summary>
+        public Client TempClient
+        {
+            get
+            {
+                Clients.Where(i=>i.AccountsId)
+            }
+            set
+            {
+                tempClient = value;
+                OnPropertyChanged("TempClient");
+            }
+        }
+
+
+        
         #endregion
 
         #region Конструктор
