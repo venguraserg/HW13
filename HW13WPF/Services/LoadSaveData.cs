@@ -50,7 +50,7 @@ namespace HW13WPF.Services
                 for (int j = 0; j < rnd.Next(1, 5); j++)
                 {
                     Account newAccount = new Account((AccountCurrency)j, clients[i].Id);
-                    clients[i].AccountsId.Add(newAccount.Id);
+                    clients[i].Accounts.Add(newAccount);
                     accounts.Add(newAccount);
                 }
             }

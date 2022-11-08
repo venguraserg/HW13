@@ -1,6 +1,7 @@
 ﻿using HW13WPF.Command;
 using HW13WPF.Model;
 using HW13WPF.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace HW13WPF.ViewModel
         private ObservableCollection<Account> selectedClientAccounts;   //Поле счетов выделенного клинта
         private Account selectedAccount;                                //Поле выделенного счета
         private Account selectedAccount2;
+        private Client selectedAccountClient;
         // Поля нового клиента
         private string newClientName;
         private string newClientSurName;
@@ -114,8 +116,29 @@ namespace HW13WPF.ViewModel
             {
                 selectedAccount2 = value;
                 OnPropertyChanged("SelectedAccount2");
+                if (SelectedAccount2 != null)
+                {
+                    SelectedAccountClient =  Clients.First(i => i.Id == SelectedAccount2.IdClient);
+                }
+                
             }
         }
+        /// <summary>
+        /// Выделеный счет выделеного клиента
+        /// </summary>
+        public Client SelectedAccountClient
+        {
+            get => selectedAccountClient;
+            set
+            {                
+                selectedAccountClient = value;
+                OnPropertyChanged("SelectedAccountClientName");
+            }
+        }
+
+
+
+        
         /// <summary>
         /// Имя нового клиента
         /// </summary>
@@ -310,7 +333,7 @@ namespace HW13WPF.ViewModel
         {
             var newAccount = new Account(AccountCurrency.BYN, SelectedClient.Id);
             Accounts.Add(newAccount);
-            SelectedClient.AccountsId.Add(newAccount.Id);
+            SelectedClient.Accounts.Add(newAccount);
             
         }
         private bool CanAddAccountCommandExecute(object p) => true;
@@ -327,4 +350,5 @@ namespace HW13WPF.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
+   
 }
