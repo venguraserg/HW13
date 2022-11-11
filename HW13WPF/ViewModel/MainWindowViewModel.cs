@@ -199,23 +199,7 @@ namespace HW13WPF.ViewModel
                 OnPropertyChanged("NewClientPassNumber");
             }
         }
-        /// <summary>
-        /// Номер паспорта нового клиента
-        /// </summary>
-        public Client TempClient
-        {
-            get
-            {
-               var sss =  Accounts.First(i => i.IdClient == SelectedAccount2.Id);
-                
-                    return tempClient;
-            }
-            set
-            {
-                tempClient = value;
-                OnPropertyChanged("TempClient");
-            }
-        }
+        
 
 
         
@@ -247,18 +231,11 @@ namespace HW13WPF.ViewModel
                 {
                     LoadSaveData.ClientAutofill(100);
                     Clients = LoadSaveData.Load<Client>(CLIENT_FILE_NAME);
-
-                    if (MessageBox.Show("Список счетов пуст\nЗаполнить Автоматически?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-                    {
-                        Clients = LoadSaveData.AccountAutofill(Clients);
-                        LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
-
-                    }
-
+                                       
                 }
             }
             ///Загрузка списка счетов из файла
-            Accounts = LoadSaveData.Load<Account>(ACCOUNT_FILE_NAME);
+            //Accounts = LoadSaveData.Load<Account>(ACCOUNT_FILE_NAME);
         }
         #endregion
 

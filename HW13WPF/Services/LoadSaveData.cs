@@ -17,9 +17,9 @@ namespace HW13WPF.Services
         /// <param name="number"></param>
         public static void ClientAutofill(int number)
         {
-            var clients = new ObservableCollection<Client>();           
+            var clients = new ObservableCollection<Client>();
+            var rnd = new Random();
 
-            
             for (int i = 0; i < number; i++)
             {
                 string tempGuid = Guid.NewGuid().ToString();
@@ -30,6 +30,16 @@ namespace HW13WPF.Services
                                            "Ph#" + stringMassive[3].ToString(),
                                            "N_pass" + stringMassive[4].ToString());
 
+                
+                                
+                for (int j = 0; j < rnd.Next(1, 5); j++)
+                {
+                    Account newAccount = new Account((AccountCurrency)j, newClient.Id);
+                    newClient.Accounts.Add(newAccount);
+                    
+                }
+                
+
                 clients.Add(newClient);
             }
             Save("client_data.json", clients);           
@@ -39,7 +49,7 @@ namespace HW13WPF.Services
         /// Автозаполнение счетов для теста
         /// </summary>
         /// <param name="number"></param>
-        public static ObservableCollection<Client> AccountAutofill(ObservableCollection<Client> clients)
+       /* public static ObservableCollection<Client> AccountAutofill(ObservableCollection<Client> clients)
         {
             var accounts = new ObservableCollection<Account>();
 
@@ -58,7 +68,7 @@ namespace HW13WPF.Services
             Save("acount_data.json", accounts);
             return clients;
 
-        }
+        }*/
 
         /// <summary>
         /// Десериализация данных их файла

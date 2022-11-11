@@ -81,7 +81,10 @@ namespace HW13WPF.Model
             }
         }
 
+        public Client()
+        {
 
+        }
         public Client(string name, string surName, string patronymic, string phoneNumber, string passNumber)
         {
             Id = Guid.NewGuid();
@@ -92,6 +95,18 @@ namespace HW13WPF.Model
             PassNumber = passNumber;
             Accounts = new ObservableCollection<Account>();
             
+        }
+
+        public Client(string name, string surName, string patronymic, string phoneNumber, string passNumber, ObservableCollection<Account> accounts)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            SurName = surName;
+            Patronymic = patronymic;
+            PhoneNumber = phoneNumber;
+            PassNumber = passNumber;
+            Accounts = accounts;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
