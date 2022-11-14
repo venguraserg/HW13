@@ -1,5 +1,7 @@
 ﻿using HW13WPF.Command;
-using HW13WPF.Model;
+using HW13WPF.Interfaces;
+using HW13WPF.Model.Accounts;
+using HW13WPF.Model.Clients;
 using HW13WPF.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -17,9 +19,6 @@ namespace HW13WPF.ViewModel
         #region Поля и свойства
         //поля имени файла для хранения данных
         private const string CLIENT_FILE_NAME = "client_data.json";
-        private const string ACCOUNT_FILE_NAME = "acount_data.json";
-        private ObservableCollection<AccountCurrency> currency = new ObservableCollection<AccountCurrency> { AccountCurrency.BYN, AccountCurrency.USD, AccountCurrency.EUR, AccountCurrency.RUR};
-
         private ObservableCollection<Client> clients;                   //Поле коллекции клиентов
         private ObservableCollection<Account> accounts;                 //Поле коллекции счетов
         private Client selectedClient;                                  //Поле выделенного клиента
@@ -34,9 +33,15 @@ namespace HW13WPF.ViewModel
         private string newClientPhoneNumber;
         private string newClientPassNumber;
 
-        private Client tempClient;
+        
         //Новый счет
-        public ObservableCollection<AccountCurrency> Currency{ get => currency; }
+        public ObservableCollection<AccountCurrency> Currency 
+        { 
+            get
+            {                
+                return new ObservableCollection<AccountCurrency> { AccountCurrency.BYN, AccountCurrency.USD, AccountCurrency.EUR, AccountCurrency.RUR }; 
+            }
+        }
         /// <summary>
         /// Список клиентов
         /// </summary>
@@ -269,7 +274,7 @@ namespace HW13WPF.ViewModel
                 Clients.Remove(SelectedClient);
 
                 LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
-                LoadSaveData.Save(ACCOUNT_FILE_NAME, Accounts);
+                
             }
 
         }
@@ -282,7 +287,7 @@ namespace HW13WPF.ViewModel
         private void OnUpdateSelectClientCommandExecuted(object p)
         {
             LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
-            LoadSaveData.Save(ACCOUNT_FILE_NAME, Accounts);
+            
         }
         private bool CanUpdateSelectClientCommandExecute(object p) => true;
 
@@ -292,9 +297,9 @@ namespace HW13WPF.ViewModel
         public ICommand AddClientCommand { get; }
         private void OnAddClientCommandExecuted(object p)
         {
-            var client = new Client(NewClientName, NewClientSurName, NewClientPatronymic, NewClientPhoneNumber, NewClientPassNumber);
-            Clients.Insert(0, client);
-            LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
+            //var client = new Client(NewClientName, NewClientSurName, NewClientPatronymic, NewClientPhoneNumber, NewClientPassNumber);
+           // Clients.Insert(0, client);
+           // LoadSaveData.Save(CLIENT_FILE_NAME, Clients);
         }
         private bool CanAddClientCommandExecute(object p) => !(NewClientName == null ||
                                                               NewClientSurName == null ||
@@ -308,9 +313,9 @@ namespace HW13WPF.ViewModel
         public ICommand AddAccountCommand { get; }
         private void OnAddAccountCommandExecuted(object p)
         {
-            var newAccount = new Account(AccountCurrency.BYN, SelectedClient.Id);
-            Accounts.Add(newAccount);
-            SelectedClient.Accounts.Add(newAccount);
+            //var newAccount = new Account(AccountCurrency.BYN, SelectedClient.Id);
+            //Accounts.Add(newAccount);
+            //SelectedClient.Accounts.Add(newAccount);
             
         }
         private bool CanAddAccountCommandExecute(object p) => true;

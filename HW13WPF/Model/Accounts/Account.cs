@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace HW13WPF.Model
+namespace HW13WPF.Model.Accounts
 {
-    public class Account : INotifyPropertyChanged
+    public  class Account : INotifyPropertyChanged
     {
         public static int count;
         private Guid id;
@@ -20,45 +20,45 @@ namespace HW13WPF.Model
         /// <summary>
         /// Id счета
         /// </summary>
-        public Guid Id 
-        { 
-            get => id; 
+        public Guid Id
+        {
+            get => id;
             set
             {
                 id = value;
                 OnPropertyChanged("Id");
-            }  
+            }
         }
         /// <summary>
         /// Номер счета
         /// </summary>
-        public string AccountNumber 
-        { 
-            get => accountNumber; 
+        public string AccountNumber
+        {
+            get => accountNumber;
             set
             {
                 accountNumber = value;
                 OnPropertyChanged("AccountNumber");
             }
-             
+
         }
         /// <summary>
         /// Валюта
         /// </summary>
-        public AccountCurrency Currency 
-        { 
-            get => currency; 
+        public AccountCurrency Currency
+        {
+            get => currency;
             set
             {
                 currency = value;
                 OnPropertyChanged("AccountNumber");
             }
-            
+
         }
         /// <summary>
         /// Баланс счета
         /// </summary>
-        public decimal AccountBalance 
+        public decimal AccountBalance
         {
             get => accountBalance;
             set
@@ -70,14 +70,14 @@ namespace HW13WPF.Model
         /// <summary>
         /// ID Client
         /// </summary>
-        public Guid IdClient 
-        { 
+        public Guid IdClient
+        {
             get => idClient;
-            set 
-            { 
+            set
+            {
                 idClient = value;
                 OnPropertyChanged("IdClient");
-            } 
+            }
         }
 
 

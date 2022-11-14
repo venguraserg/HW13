@@ -14,7 +14,14 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <StackPanel>
+    <Grid>
+        <TabControl TabStripPlacement="Left" >
+            <TabItem Header="1adsdsdadasd"/>
+            <TabItem Header="2asdasdasd"/>
+        </TabControl>
+    </Grid>
+    
+    <!--<StackPanel>
         <Menu Grid.Row="0" >
             <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"/>
             <MenuItem Header="Сохранить измения" Command="{Binding UpdateSelectClientCommand}"/>
@@ -213,6 +220,6 @@
                 
             </TabItem>
         </TabControl>
-    </StackPanel>
+    </StackPanel>-->
     
 </Window>

@@ -1,31 +1,27 @@
-﻿using System;
+﻿using HW13WPF.Interfaces;
+using HW13WPF.Model.Accounts;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace HW13WPF.Model
+namespace HW13WPF.Model.Clients
 {
-    public class Client : INotifyPropertyChanged
+    public class IndividualClient : Client
     {
-        private Guid id;
+        
         private string name;
         private string surName;
         private string patronymic;
         private string phoneNumber;
         private string passNumber;
         private ObservableCollection<Account> accounts;
+        
 
-        public Guid Id
-        {
-            get => id;
-            set
-            {
-                id = value; 
-                OnPropertyChanged("Id");
-            }
-        }
+        
+
         public string Name
         {
             get => name;
@@ -71,49 +67,31 @@ namespace HW13WPF.Model
                 OnPropertyChanged("PassNumber");
             }
         }
-        public ObservableCollection<Account> Accounts
-        {
-            get => accounts;
-            set
-            {
-                accounts = value;
-                OnPropertyChanged("Accounts");
-            }
-        }
 
-        public Client()
-        {
-
-        }
-        public Client(string name, string surName, string patronymic, string phoneNumber, string passNumber)
+        
+        public IndividualClient(string name, string surName, string patronymic, string phoneNumber, string passNumber):base()
         {
             Id = Guid.NewGuid();
             Name = name;
             SurName = surName;
-            Patronymic = patronymic;
+            Patronymic = patronymic;    
             PhoneNumber = phoneNumber;
             PassNumber = passNumber;
             Accounts = new ObservableCollection<Account>();
-            
-        }
-
-        public Client(string name, string surName, string patronymic, string phoneNumber, string passNumber, ObservableCollection<Account> accounts)
-        {
-            Id = Guid.NewGuid();
-            Name = name;
-            SurName = surName;
-            Patronymic = patronymic;
-            PhoneNumber = phoneNumber;
-            PassNumber = passNumber;
-            Accounts = accounts;
 
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+
+
+       /* public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
+
+        public void NewMethod()
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }

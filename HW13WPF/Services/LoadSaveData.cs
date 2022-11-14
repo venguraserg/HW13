@@ -1,4 +1,6 @@
-﻿using HW13WPF.Model;
+﻿using HW13WPF.Interfaces;
+using HW13WPF.Model.Accounts;
+using HW13WPF.Model.Clients;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,17 +26,38 @@ namespace HW13WPF.Services
             {
                 string tempGuid = Guid.NewGuid().ToString();
                 string[] stringMassive = tempGuid.Split(new char[] { '-' });
-                var newClient = new Client("Name" + stringMassive[0].ToString(),
-                                           "Surname" + stringMassive[1].ToString(),
-                                           "Pat" + stringMassive[2].ToString(),
-                                           "Ph#" + stringMassive[3].ToString(),
-                                           "N_pass" + stringMassive[4].ToString());
+                Client newClient;
+                if (i % 2 == 1)
+                {
+                    newClient = new IndividualClient("Name" + stringMassive[0].ToString(),
+                                          "Surname" + stringMassive[1].ToString(),
+                                          "Pat" + stringMassive[2].ToString(),
+                                          "Ph#" + stringMassive[3].ToString(),
+                                          "N_pass" + stringMassive[4].ToString());
+                }
+                else
+                {
+                    newClient = new BussinesClient("Company " + stringMassive[0].ToString(),
+                                                   "Supervisor " + stringMassive[1].ToString(),
+                                                   "Reg#" + stringMassive[2].ToString());
+                }
 
                 
-                                
+
+
+
                 for (int j = 0; j < rnd.Next(1, 5); j++)
                 {
-                    Account newAccount = new Account((AccountCurrency)j, newClient.Id);
+                    Account newAccount;
+                    if (j % 2 == 1)
+                    {
+                        newAccount = new IndividualAccount((AccountCurrency)j, newClient.Id);
+                    }
+                    else
+                    {
+                        newAccount = new VIP_Account((AccountCurrency)j, newClient.Id);
+                    }
+                        
                     newClient.Accounts.Add(newAccount);
                     
                 }
@@ -45,30 +68,7 @@ namespace HW13WPF.Services
             Save("client_data.json", clients);           
 
         }
-        /// <summary>
-        /// Автозаполнение счетов для теста
-        /// </summary>
-        /// <param name="number"></param>
-       /* public static ObservableCollection<Client> AccountAutofill(ObservableCollection<Client> clients)
-        {
-            var accounts = new ObservableCollection<Account>();
-
-            var rnd = new Random();
-
-            for (int i = 0; i < clients.Count; i++)
-            {
-                for (int j = 0; j < rnd.Next(1, 5); j++)
-                {
-                    Account newAccount = new Account((AccountCurrency)j, clients[i].Id);
-                    clients[i].Accounts.Add(newAccount);
-                    accounts.Add(newAccount);
-                }
-            }
-           
-            Save("acount_data.json", accounts);
-            return clients;
-
-        }*/
+        
 
         /// <summary>
         /// Десериализация данных их файла
